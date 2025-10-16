@@ -1,0 +1,16 @@
+# https://blog.csdn.net/Javatutouhouduan/article/details/129986989
+xtechcn:
+  anti:
+    replay:
+      # 全局放重发拦截配置
+      global:
+        # 全局签名验证是否开启
+        check-sign: ${CHECK_SIGN:false}
+        # 全局重放攻击是否开启
+        anti-replay: ${ANTI_REPLAY:false}
+        # 忽略拦截的地址
+        ignore-urls:
+          # 登录相关的所有接口不需要验证,首页图标
+          - ^(/|/auth/.*|/error|/favicon.ico|/static/.*)$
+          # swagger 相关
+          - ^(/v3/api-docs(/.*)?|/doc.html.*|/swagger-ui/.*|/webjars/.*)$

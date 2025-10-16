@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.xtechcn.microservice.fast</groupId>
+        <artifactId>single-business</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>single-runner</artifactId>
+    <version>${revision}</version>
+    <packaging>jar</packaging>
+    <description>应用启动类</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-serialization</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-xss</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-antireplay</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-auth</artifactId>
+        </dependency>
+        <!-- UPMS 服务 -->
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-upms</artifactId>
+        </dependency>
+        <!-- 定时任务 -->
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-job</artifactId>
+        </dependency>
+        <!-- Base 基础服务模块 -->
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-business-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-customer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-product</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <!-- deploy 时忽略跳过发布源码到私有仓库 -->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

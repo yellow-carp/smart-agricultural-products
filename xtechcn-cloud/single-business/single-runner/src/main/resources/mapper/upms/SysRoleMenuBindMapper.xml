@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtechcn.cloud.upms.mapper.SysRoleMenuBindMapper">
+
+    <resultMap id="menuTreeVo" type="com.xtechcn.cloud.upms.model.tree.MenuTree">
+        <id property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="name" column="name"/>
+        <result property="permission" column="permission"/>
+        <result property="path" column="path"/>
+        <result property="icon" column="icon"/>
+        <result property="isCache" column="is_cache"/>
+        <result property="type" column="type"/>
+        <result property="level" column="level"/>
+        <result property="countChi" column="count_chi"/>
+        <result property="linkType" column="link_type"/>
+        <result property="isHidden" column="is_hidden"/>
+        <result property="checked" column="checked"/>
+    </resultMap>
+
+
+    <!-- 查询角色选中的菜单 -->
+    <select id="selectRoleChecked" resultMap="menuTreeVo">
+        SELECT `m`.`id`,
+               `m`.`pid`,
+               `m`.`name`,
+               `m`.`permission`,
+               `m`.`path`,
+               `m`.`icon`,
+               `m`.`is_cache`,
+               `m`.`type`,
+               `m`.`level`,
+               `m`.`count_chi`,
+               `m`.`is_hidden`,
+               `m`.`link_type`,
+               `m`.`is_hidden`,
+               IF(`rm`.`menu_id` IS NOT NULL, 1, 0) AS `checked`
+        FROM `upms_sys_menu` `m`
+                 LEFT JOIN `upms_sys_role_menu_bind` AS `rm` ON `m`.`id` = `rm`.`menu_id` AND `rm`.`role_id` = #{roleId}
+        WHERE `m`.`is_delete` = 0
+    </select>
+
+    <!-- 查询角色中仅仅选中的权限菜单数据 -->
+    <select id="selectRoleOnlyChecked" resultMap="menuTreeVo">
+        SELECT `m`.`id`,
+               `m`.`pid`,
+               `m`.`name`,
+               `m`.`permission`,
+               `m`.`path`,
+               `m`.`icon`,
+               `m`.`is_cache`,
+               `m`.`type`,
+               `m`.`level`,
+               `m`.`count_chi`,
+               `m`.`is_hidden`,
+               `m`.`link_type`,
+               `m`.`is_hidden`,
+               IF(`rm`.`menu_id` IS NOT NULL, 1, 0) AS `checked`
+        FROM `upms_sys_menu` `m`
+                 LEFT JOIN `upms_sys_role_menu_bind` AS `rm` ON `m`.`id` = `rm`.`menu_id` AND `rm`.`role_id` = #{roleId}
+        WHERE `m`.`is_delete` = 0
+          AND `rm`.`menu_id` IS NOT NULL
+    </select>
+
+</mapper>

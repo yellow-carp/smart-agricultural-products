@@ -1,0 +1,36 @@
+version: 'v2.37.3'
+services:
+
+  # Nginx
+  xtechcn-nginx:
+    env_file:
+      - '.env'
+    image: registry.cn-hangzhou.aliyuncs.com/xtechcn-public/nginx:latest
+    container_name: xtechcn-nginx
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      # 挂载单个配置文件到宿主机,如果不需要使用主配置文件挂载则注释第一行
+      - '${NGINX_VOLUME}/conf/nginx.conf:/etc/nginx/nginx.conf'
+      - '${NGINX_VOLUME}/conf/conf.d:/etc/nginx/conf.d'
+      # 日志
+      - '${NGINX_VOLUME}/logs:/var/log/nginx/'
+      # Html 页面
+      - '${NGINX_VOLUME}/html:/usr/share/nginx/html'
+      # 网站挂载
+      - '${NGINX_VOLUME}/www/wwwroot:/www/wwwroot'
+      # SSL 证书挂在
+      - '${NGINX_VOLUME}/www/ssl:/www/ssl'
+      # 网站日志记录（非 Nginx 系统日志日志）
+      - '${NGINX_VOLUME}/www/wwwlogs:/www/wwwlogs'
+    networks:
+      - xtechcn-base-network
+
+# 自定义网桥 xtechcn
+networks:
+  xtechcn-base-network:
+    # 启动时不自动创建网桥,需要提前手动创建 网桥 docker network create -d bridge xtechcn-base-network
+    external: true
+    driver: bridge

@@ -1,0 +1,45 @@
+:root {
+  --title-text-color: #191a23;
+  --title-text-size_max: 20px;
+  --title-text-size_middle: 16px;
+  --title-text-size_min: 14px;
+}
+
+
+
+// 自定义抽屉 - 头
+.erp-drawer {
+  .el-drawer__header {
+    padding: 0 0 0 10px;
+    height: 32px;
+    background: #e1e6f5;
+    box-shadow: 0 3px 5px #92a8e8;
+    margin: 0 0 5px 0;
+
+    .el-drawer__title {
+      font-size: var(--title-text-size_min);
+      color: var(--title-text-color);
+      line-height: 32px;
+    }
+
+    .close-wrapper {
+      height: 32px;
+      width: 32px;
+      color: #ffffff;
+      background: #92a8e8;
+      border-radius: 0 0 0 40px;
+      box-shadow: 0 3px 5px #859de3;
+      position: relative;
+
+      .iconfont {
+        position: absolute;
+        top: 4px;
+        left: 10px;
+      }
+    }
+  }
+
+  .el-drawer__body {
+    padding: 0 5px;
+  }
+}

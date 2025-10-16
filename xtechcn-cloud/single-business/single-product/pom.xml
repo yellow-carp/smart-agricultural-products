@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.xtechcn.microservice.fast</groupId>
+        <artifactId>single-business</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <description>商品模块</description>
+    <artifactId>single-product</artifactId>
+    <version>${revision}</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-mp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter</groupId>
+            <artifactId>xtechcn-common-lock</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter</groupId>
+            <artifactId>xtechcn-common-sequence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-antireplay</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-business-api</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

@@ -1,0 +1,19 @@
+2025-10-15 20:42:16.052 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+┌──->──┐
+|  areaController (field private com.xtechcn.cloud.customer.controller.AreaController com.xtechcn.cloud.customer.controller.AreaController.areaController)
+└──<-──┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+

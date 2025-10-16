@@ -1,0 +1,51 @@
+version: 'v2.38.2'
+services:
+
+  # 单体业务服务应用(本机进行构建镜像的方式运行)
+  xtechcn-single-fresh:
+    env_file:
+      - '.env'
+      - 'mysql.env'
+      - 'redis.env'
+      - 'single-app.env'
+    container_name: xtechcn-single-fresh
+    image: xtechcn-single-fresh
+    build:
+      args:
+        - JD=${JDK_VERSION}
+        - TIME_ZONE=${TZ}
+        - SERVER_NAME=single-runner
+        - SERVER_PORT=${SINGLE_APP_PORT}
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '${SINGLE_APP_PORT}:${SINGLE_APP_PORT}'
+    extra_hosts:
+      - 'minio.lawfirms.com.cn:127.0.0.1'
+    networks:
+      - single-app-network
+
+  xtechcn-single-fresh-slave:
+    env_file:
+      - '.env'
+      - 'mysql.env'
+      - 'redis.env'
+      - 'single-app.env'
+    container_name: xtechcn-single-fresh-slave
+    image: xtechcn-single-fresh
+    restart: always
+    ports:
+      - '1124:${SINGLE_APP_PORT}'
+    extra_hosts:
+      - 'minio.lawfirms.com.cn:127.0.0.1'
+    networks:
+      - single-app-network
+
+
+# 自定义网桥 single-app-network
+networks:
+  single-app-network:
+    # 启动时不自动创建网桥,需要提前手动创建 网桥 docker network create -d bridge single-app-network
+    external: true
+    driver: bridge

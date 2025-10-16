@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.xtechcn.microservice.fast</groupId>
+        <artifactId>single-business</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <description>支付模块</description>
+    <artifactId>single-payment</artifactId>
+    <version>${revision}</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <ijpay.version>2.9.12.1-17</ijpay.version>
+        <log4j.version>1.2.17</log4j.version>
+        <com-cfca-logback.version>4.1.1.0</com-cfca-logback.version>
+        <com-cfca-sadk.version>3.5.2.1</com-cfca-sadk.version>
+        <cncp-payment-api.version>2.6.2.3-SNAPSHOT</cncp-payment-api.version>
+        <cncp-payment-tools.version>v1.0.1.4-RELEASE</cncp-payment-tools.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-serialization</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-antireplay</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-sequence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-swagger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-payment</artifactId>
+        </dependency>
+        <!-- 中金支付 -->
+        <dependency>
+            <groupId>com.xtechcn.starter</groupId>
+            <artifactId>xtechcn-common-cpcn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.starter</groupId>
+            <artifactId>xtechcn-common-lock</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xtechcn.microservice.fast</groupId>
+            <artifactId>single-business-api</artifactId>
+        </dependency>
+
+        <!-- mybatis-Plus -->
+        <dependency>
+            <groupId>com.xtechcn.starter.fast</groupId>
+            <artifactId>xtechcn-mp</artifactId>
+        </dependency>
+
+        <!--微信支付依赖-->
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-WxPay</artifactId>
+            <version>${ijpay.version}</version>
+        </dependency>
+        <!--支付宝支付依赖-->
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-AliPay</artifactId>
+            <version>${ijpay.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

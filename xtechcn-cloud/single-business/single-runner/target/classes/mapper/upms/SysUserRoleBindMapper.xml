@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtechcn.cloud.upms.mapper.SysUserRoleBindMapper">
+
+
+    <resultMap id="roleVoMap" type="com.xtechcn.cloud.upms.model.vo.RoleVo">
+        <result property="ofId" column="of_id"/>
+        <result property="roleId" column="role_id"/>
+        <result property="roleCode" column="role_code"/>
+        <result property="roleName" column="role_name"/>
+        <result property="dataScope" column="data_scope"/>
+        <result property="dataScopes" column="data_scopes"
+                typeHandler="com.xtechcn.common.mybatis.typehandler.Int2SetTypeHandler"/>
+        <result property="checked" column="checked"/>
+        <result property="disabled" column="disabled"/>
+    </resultMap>
+
+    <!-- 查询用户的个人角色集合 -->
+    <select id="selectUserRoles" resultMap="roleVoMap">
+        SELECT `user_role`.`user_id` AS `of_id`,
+               `role`.`id`           AS `role_id`,
+               `role`.`code`         AS `role_code`,
+               `role`.`type`         AS `role_type`,
+               `role`.`name`         AS `role_name`,
+               `role`.`data_scope`,
+               `role`.`data_scopes`
+        FROM `upms_sys_user_role_bind` AS `user_role`
+                 LEFT JOIN `upms_sys_role` AS `role` ON `role`.`id` = `user_role`.`role_id`
+            AND `role`.`is_delete` = 0
+        WHERE `user_role`.`user_id` = #{userId}
+    </select>
+
+    <select id="selectUsersRoles" resultMap="roleVoMap">
+        SELECT `user_role`.`user_id` AS `of_id`,
+               `role`.`id`           AS `role_id`,
+               `role`.`code`         AS `role_code`,
+               `role`.`type`         AS `role_type`,
+               `role`.`name`         AS `role_name`,
+               `role`.`data_scope`,
+               `role`.`data_scopes`
+        FROM `upms_sys_user_role_bind` AS `user_role`
+                 LEFT JOIN `upms_sys_role` AS `role` ON `role`.`id` = `user_role`.`role_id`
+            AND `role`.`is_delete` = 0
+        WHERE `user_role`.`user_id` IN
+        <foreach collection="userIds" open="(" separator="," close=")" item="userId">
+            #{userId}
+        </foreach>
+    </select>
+
+
+    <!-- 查询角色用户选中关系 -->
+    <select id="selectUserRolesChecked" resultMap="roleVoMap">
+        SELECT `user_role`.`user_id`                       AS `of_id`,
+               IF(`user_role`.`user_id` IS NOT NULL, 1, 0) AS `checked`,
+               IF(`role`.`type` = 1, 1, 0)                 AS `disabled`,
+               `role`.`id`                                 AS `role_id`,
+               `role`.`code`                               AS `role_code`,
+               `role`.`name`                               AS `role_name`,
+               `role`.`data_scope`,
+               `role`.`data_scopes`
+        FROM `upms_sys_role` AS `role`
+                 LEFT JOIN `upms_sys_user_role_bind` AS `user_role` ON `user_role`.`role_id` = `role`.`id`
+            AND `user_role`.`user_id` = #{query.ofId}
+        WHERE `role`.`is_delete` = 0
+    </select>
+
+
+</mapper>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.5</version>
+        <relativePath/>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <description>依赖管理</description>
+    <groupId>com.xtechcn.microservice.fast</groupId>
+    <artifactId>dependencies</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <!-- 项目总版本号统一管理 -->
+        <revision>1.0.0</revision>
+
+        <!-- Java 版本 -->
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- 混合 Kotlin 开发依赖版本 -->
+        <org-jetbrains-kotlin.version>2.2.20</org-jetbrains-kotlin.version>
+
+        <!-- Spring 版本管理 -->
+        <springframework.version>6.2.11</springframework.version>
+        <!-- SpringBoot 版本管理 -->
+        <spring-boot.version>3.5.5</spring-boot.version>
+        <!-- SpringCloud 版本管理 -->
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
+        <!-- spring-阿里巴巴 相关 https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明 -->
+        <spring-cloud-alibaba.version>2023.0.3.3</spring-cloud-alibaba.version>
+        <!-- Alibaba线程传递变量 -->
+        <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
+        <!-- 新腾科技自有框架版本管理 -->
+        <xtechcn-common.version>${project.version}</xtechcn-common.version>
+        <!-- 新腾SaaS 技术引入 -->
+        <xtechcn-saas-common.version>3.2.3</xtechcn-saas-common.version>
+
+        <!-- JWT 版本 -->
+        <io-jsonwebtoken.version>0.13.0</io-jsonwebtoken.version>
+
+        <!-- DB 相关依赖管理 -->
+        <mybatis.version>3.5.19</mybatis.version>
+        <mybatis-plus.version>3.5.14</mybatis-plus.version>
+        <mybatis-flex.version>1.11.1</mybatis-flex.version>
+        <!-- GaussDB 数据库链接驱动 -->
+        <opengauss-jdbc.version>6.0.0</opengauss-jdbc.version>
+        <!-- MySQL 数据库链接驱动 -->
+        <mysql-connector.version>8.0.33</mysql-connector.version>
+        <druid-spring-boot3.version>1.2.27</druid-spring-boot3.version>
+        <baomidou-dynamic-datasource.version>4.3.1</baomidou-dynamic-datasource.version>
+
+        <!-- 阿里云短信 -->
+        <aliyun-sms.version>4.1.2</aliyun-sms.version>
+        <!--编码-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- OKHttps 客户端 https://ok.zhxu.cn/v4/getstart.html -->
+        <cn-zhxu-okhttps.version>4.1.0</cn-zhxu-okhttps.version>
+        <com-squareup-okhttp3.version>3.14.9</com-squareup-okhttp3.version>
+        <!-- 反射工具类 -->
+        <org-reflections.version>0.10.2</org-reflections.version>
+
+        <hutool.version>5.8.40</hutool.version>
+        <lombok.version>1.18.40</lombok.version>
+
+        <!-- Maven 版本号动态管理插件版本 -->
+        <flatten-maven-plugin.version>1.7.2</flatten-maven-plugin.version>
+        <!-- docker 插件版本管理 -->
+        <maven-docker-plugin.version>0.46.0</maven-docker-plugin.version>
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${springframework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 新腾SaaS 部分组件技术引入 -->
+            <dependency>
+                <groupId>com.xtechcn.starter</groupId>
+                <artifactId>xtechcn-parent</artifactId>
+                <version>${xtechcn-saas-common.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+                <exclusions>
+                    <!--排除 Tomcat 依赖-->
+                    <exclusion>
+                        <artifactId>spring-boot-starter-tomcat</artifactId>
+                        <groupId>org.springframework.boot</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- 与Kotlin 混合开发 -->
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${org-jetbrains-kotlin.version}</version>
+            </dependency>
+
+            <!-- MP -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!--阿里云短信依赖-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>${aliyun-sms.version}</version>
+            </dependency>
+
+            <!-- lombok插件 模块间引入依赖时不会传递 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- 与 Kotlin 混合开发 https://book.kotlincn.net/text/annotations.html -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- 与Kotlin 混合开发需要的编译插件 https://hltj.gitbooks.io/kotlin-reference-chinese/content/txt/compiler-plugins.html -->
+                <plugin>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${org-jetbrains-kotlin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>compile</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>test-compile</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>test-compile</goal>
+                            </goals>
+                            <configuration>
+                                <sourceDirs>
+                                    <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                                    <sourceDir>${project.basedir}/src/test/java</sourceDir>
+                                </sourceDirs>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <jvmTarget>${java.version}</jvmTarget>
+                        <javaParameters>true</javaParameters>
+                        <args>
+                            <!-- Add compiler agument: -Xannotation-default-target=param-property -->
+                            <argument>-Xannotation-default-target=param-property</argument>
+                        </args>
+                        <sourceDirs>
+                            <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                            <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                        </sourceDirs>
+                    </configuration>
+                </plugin>
+                <!-- 发布 jar （class 文件）到中央仓库 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <!-- 避免反射中获取 method.getParameters() 无法获取到参数名称 -->
+                        <compilerArgs>
+                            <arg>-parameters</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+                <!-- 发布 源码（.java）到中央仓库 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 版本号动态管理 https://maven.apache.org/maven-ci-friendly.html -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>${flatten-maven-plugin.version}</version>
+                    <configuration>
+                        <updatePomFile>true</updatePomFile>
+                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- 混合 Kotlin 开发 -->
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+            </plugin>
+            <!-- 版本号动态管理 https://maven.apache.org/maven-ci-friendly.html -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    host: ${MYSQL_HOST:xtechcn-single-mysql}
+    port: ${MYSQL_PORT:3306}
+    database: ${MYSQL_DATABASE:xtechcn_single_fresh}
+    url: jdbc:mysql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.database}?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:xtechcn}
+    password: ${MYSQL_PASSWORD:xtechcn_Y4wpeu8rivRPQ8RmwP6p}
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver

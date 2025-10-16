@@ -1,0 +1,30 @@
+version: 'v2.38.2'
+services:
+
+  # Redis
+  xtechcn-redis:
+    env_file: '.env'
+    container_name: xtechcn-redis
+    image: registry.cn-hangzhou.aliyuncs.com/xtechcn-public/redis:${REDIS_VERSION}
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - '${REDIS_VOLUME}/data:/data'
+    # Redis密码
+    command: [
+        'redis-server',
+        '--bind','0.0.0.0',
+        '--protected-mode','no',
+        '--appendonly','yes',
+        '--requirepass','${REDIS_PASSWORD}'
+    ]
+    networks:
+      - xtechcn-base-network
+
+# 自定义网桥 xtechcn
+networks:
+  xtechcn-base-network:
+    # 启动时不自动创建网桥,需要提前手动创建 网桥 docker network create -d bridge xtechcn-base-network
+    external: true
+    driver: bridge

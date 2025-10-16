@@ -1,0 +1,34 @@
+############  Spring Redis 相关配置实战项目中挪到 Nacos 中 ##################
+spring:
+  data:
+    # org.springframework.boot.autoconfigure.data.redis.RedisProperties
+    redis:
+      # Redis主机名称
+      host: ${REDIS_HOST:xtechcn-single-redis}
+      # Redis服务端端口
+      port: ${REDIS_PORT:6379}
+      # 连接Redis的数据库索引，默认为0，Redis数据索引：0~15
+      database: ${REDIS_DATABASE:0}
+      # 登录Redis服务端密码
+      password: ${REDIS_PASSWORD:xtechcn_ZlGYGZf1SRKDwA8bxu}
+      # 连接超时
+      connect-timeout: ${REDIS_CONNECT_TIMEOUT:10s}
+      # 读超时
+      timeout: ${REDIS_TIMEOUT:10s}
+      # RedisConnectionFactory 类型（Jedis / Lettuce 默认Lettuce）
+      client-type: ${REDIS_CLIENT_TYPE:lettuce}
+
+
+  # >>>>>>>> Spring Cache 配置管理 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  cache:
+    # CacheConfigurations 类中 静态代码快中
+    type: ${CACHE_TYPE:redis}
+    redis:
+      # 防止缓存穿透问题,允许存储 null 值
+      cache-null-values: ${CACHE_NULL_VALUES:true}
+      # 将key 加入前缀,以其他的 缓存作为区分
+      key-prefix: ${CACHE_KEY_PREFIX:fresh:cache:}
+      # 是否启用 前缀（启用 和 禁用）
+      use-key-prefix: ${CACHE_USE_KEY_PREFIX:true}
+      # 缓存默认存活时间(过期时间)15小时
+      time-to-live: ${CACHE_TIME_TO_LIVE:57600s}

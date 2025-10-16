@@ -1,0 +1,31 @@
+version: 'v2.38.2'
+services:
+
+  # MySQL 编排
+  xtechcn-mysql:
+    env_file:
+      - '.env'
+    restart: always
+    container_name: xtechcn-mysql
+    image: registry.cn-hangzhou.aliyuncs.com/xtechcn-public/mysql:${MYSQL_VERSION}
+    ports:
+      - "3306:3306"
+    volumes:
+      # 初始化执行的sql脚本
+      - '${MYSQL_VOLUME}/initsql:/docker-entrypoint-initdb.d'
+      # 持久化数据挂载
+      - '${MYSQL_VOLUME}/data:/var/lib/mysql'
+      # 备份数据挂载
+      - '${MYSQL_VOLUME}/backup:/var/lib/backup'
+      # 配置文件挂载
+      - '${MYSQL_VOLUME}/conf:/etc/mysql/conf.d'
+    command: '--lower_case_table_names=1'
+    networks:
+      - xtechcn-base-network
+
+# 自定义网桥 xtechcn-base-network
+networks:
+  xtechcn-base-network:
+    # 启动时不自动创建网桥,需要提前手动创建 网桥 docker network create -d bridge xtechcn-base-network
+    external: true
+    driver: bridge

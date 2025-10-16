@@ -1,0 +1,50 @@
+# Springdoc-api 相关配置示例
+springdoc:
+  api-docs:
+    # 是否开启文档
+    enabled: ${ENABLE_SWAGGER_UI:true}
+  swagger-ui:
+    enabled: ${ENABLE_SWAGGER_UI:true}
+    path: /swagger-ui.html
+    urls:
+      # http://www.xxx.com/模块服务名称/v3/api-docs 获取数据的地址(单体项目不用加前缀)
+      - url: /v3/api-docs
+        # swagger和 knife4j 下来模块时选择的名字
+        name: xtechcn-single
+  show-actuator: true
+
+xtechcn:
+  springdoc:
+    api-docs:
+      # 标题
+      title: xtechcn-api
+      # 描述
+      description: swagger-api
+      # 版本信息
+      version: Beta-1.0
+      # 服务条款地址
+      terms-of-service: https://www.xtechcn.com/service.doc
+
+      # 服务地址
+      gateway: ${GATEWAY:http://dev.fresh.xtechcn.com/api}
+
+      # token认证相关
+      security-auth:
+        # 获取token地址
+        token-url: ${xtechcn.springdoc.api-docs.gateway}/auth/login
+        # 授权地址
+        authorization-url: ${xtechcn.springdoc.api-docs.gateway}/auth/authorization
+        # 刷新地址
+        refresh-url: ${xtechcn.springdoc.api-docs.security-auth.token-url}
+        # 作用域
+        scope: server
+
+      # 联系人信息
+      contact:
+        author: Alay
+        email: chxlay@aliyun.com
+
+      # 许可信息
+      license:
+        name: Apache 2.0
+        identifier: Apache 2.0

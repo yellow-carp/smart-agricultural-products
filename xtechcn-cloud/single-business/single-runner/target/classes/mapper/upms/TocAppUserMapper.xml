@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtechcn.cloud.upms.mapper.TocAppUserMapper">
+
+    <resultMap id="loginAuthInfo" type="com.xtechcn.cloud.api.login.LoginAuthDto">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="phone" column="phone"/>
+        <result property="avatar" column="avatar"/>
+        <result property="nickname" column="nickname"/>
+        <result property="enabled" column="enabled"/>
+        <result property="accountLocked" column="account_locked"/>
+
+        <result property="identityType" column="identity_type"/>
+        <result property="identifier" column="identifier"/>
+        <result property="credential" column="credential"/>
+        <result property="upsertTime" column="upsert_time"/>
+        <result property="lastTime" column="last_time"/>
+        <result property="lastAddress" column="last_address"/>
+        <result property="metaInfo" column="meta_info"
+                typeHandler="com.xtechcn.common.mybatis.typehandler.JsonTypeHandler"/>
+    </resultMap>
+
+
+    <select id="selectUserAuthInfo" parameterType="com.xtechcn.common.security.model.LoginCondition"
+            resultMap="loginAuthInfo">
+        SELECT `ua`.`id`,
+               `ua`.`user_id`,
+               `ua`.`identity_type`,
+               `ua`.`identifier`,
+               `ua`.`credential`,
+               `ua`.`bind_time` AS `upsert_time`,
+               `ua`.`last_time`,
+               `ua`.`last_address`,
+               `u`.`phone`,
+               `u`.`avatar`,
+               `u`.`nickname`,
+               `u`.`enabled`,
+               `u`.`account_locked`,
+               `u`.`ip_whites`,
+               `u`.`meta_info`,
+               `u`.`update_time`,
+               `u`.`create_time`
+        FROM `upms_user_authorization` AS `ua`
+                 LEFT JOIN `upms_toc_app_user` AS `u` ON `ua`.`user_id` = `u`.`user_id`
+        WHERE `u`.`is_delete` = 0
+        <if test="condition.identityType!=null">
+            AND `ua`.`identity_type` = #{condition.identityType}
+        </if>
+        AND `ua`.`identifier` = #{condition.identifier}
+    </select>
+
+
+</mapper>

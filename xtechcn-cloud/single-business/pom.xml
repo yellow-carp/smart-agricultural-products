@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.xtechcn.microservice.fast</groupId>
+        <artifactId>xtechcn-cloud</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>single-business</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>single-business-api</module>
+        <module>single-customer</module>
+        <module>single-product</module>
+        <module>single-payment</module>
+
+        <module>single-runner</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.xtechcn.starter.fast</groupId>
+                <artifactId>xtechcn-common</artifactId>
+                <version>${xtechcn-common.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-runner</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-auth</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-upms</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-job</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-base</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-business-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-customer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-product</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xtechcn.microservice.fast</groupId>
+                <artifactId>single-payment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--spring boot 默认插件-->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+
+                <!--maven  docker 打包插件 -->
+                <plugin>
+                    <!-- 官网 https://maven.fabric8.io -->
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${maven-docker-plugin.version}</version>
+                    <configuration>
+                        <!-- Docker 环境主机地址,构建 Dockerfile 时候需要使用 -->
+                        <dockerHost>${docker.host}</dockerHost>
+                        <!-- Harbor地址 -->
+                        <registry>${docker.registry}</registry>
+                        <authConfig>
+                            <push>
+                                <username>${docker.username}</username>
+                                <password>${docker.password}</password>
+                            </push>
+                        </authConfig>
+                        <images>
+                            <image>
+                                <!-- docker push 镜像仓库地址(harbor地址)/命名空间/image:tag -->
+                                <name>
+                                    ${docker.registry}/${docker.namespace}/${project.name}:${project.version}-${profiles.active}
+                                </name>
+                                <build>
+                                    <!-- Dockerfile地址 此插件也支持 docker-compose 的配置-->
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                    <buildOptions>
+                                        <!-- 网络配置 （或者直接配置 host,即 host 模式） -->
+                                        <network>host</network>
+                                    </buildOptions>
+                                </build>
+                            </image>
+                        </images>
+                        <!-- Build 时 传参给 Dockerfile -->
+                        <buildArgs>
+                            <!-- mvn clean package -DJDK=openjdk:11.0.4 -->
+                            <JDK>${docker.jdk-image}</JDK>
+                            <TIME_ZONE>Asia/Shanghai</TIME_ZONE>
+                            <!-- Dockerfile 的参数,指定 jar的路径(Dockerfile中已经定义,这里可以不定义) -->
+                            <SERVER_NAME>${project.build.finalName}</SERVER_NAME>
+                        </buildArgs>
+                        <skip>${docker.skip}</skip>
+                    </configuration>
+
+                    <!-- 执行配置 -->
+                    <executions>
+                        <execution>
+                            <id>docker-build</id>
+                            <!-- 绑定 maven 的行为, mvn package 阶段 就执行 docker build 和 docker push -->
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>build</goal>
+                                <goal>push</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation>
+                <!-- 默认环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

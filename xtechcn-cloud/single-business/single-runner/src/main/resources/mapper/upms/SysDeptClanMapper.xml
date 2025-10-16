@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtechcn.cloud.upms.mapper.SysDeptClanMapper">
+
+    <resultMap id="departmentInfoMap" type="com.xtechcn.cloud.upms.entity.SysDept">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="pid" column="pid"/>
+        <result property="level" column="level"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="upsertBy" column="upsert_by"/>
+        <result property="upsertTime" column="upsert_time"/>
+    </resultMap>
+
+
+    <select id="selectDescendantDepts" resultMap="departmentInfoMap">
+        SELECT `dept`.`id`,
+               `dept`.`name`,
+               `dept`.`pid`,
+               `dept`.`level`,
+               `dept`.`sort`,
+        FROM `upms_dept_clan` AS `clan`
+                 LEFT JOIN `upms_sys_dept` AS `dept` ON `clan`.`descendant` = `dept`.`id`
+        WHERE `clan`.`ancestor` = #{ancestor}
+          AND `dept`.`is_delete` = 0
+    </select>
+
+
+</mapper>

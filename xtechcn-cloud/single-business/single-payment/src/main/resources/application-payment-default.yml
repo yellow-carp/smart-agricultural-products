@@ -1,0 +1,79 @@
+xtechcn:
+  payment:
+    conf:
+      # 支付渠道配置存储方式 Redis
+      storage: redis
+      # 微信支付配置
+      wx-pay:
+        # 支付配置的唯一标识（AppType_OfClient_Channel）
+        channel-key: 2_3_3^1
+        # 回调地址配置
+        notify-url:
+          # 支付付款回调
+          pay-notify: ${PAY_NOTIFY_URL:https://devsingle.xtechcn.com/wxpay/notify}
+          # 退款回调
+          refund-notify: ${REFUND_NOTIFY_URL:https://devsingle.xtechcn.com/wxpay/refund/notify}
+          # 跳转地址（PC商城才需要）
+          return-url: ${RETURN_NOTIFY_URL:https://devsingle.xtechcn.com}
+        # 微信支付配置中的应用Id
+        app-id: wx00586eaeadc6bc41
+        # 商户Id
+        mch-id: 1717044447
+        # 商户平台「API安全」中的 APIv3 密钥
+        api-key3: dace9feb23dbef0e944edaa73e8b5349
+        # 秘钥文件
+        key-text: |
+          -----BEGIN PRIVATE KEY-----
+          MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCjOzI8FehGGGvT
+          wBGENZbpoHmN1xwG8Dm+o0znXfQ+uCk7CDYAn5gTfiLJ63YReUJ0hfiFi6d873gD
+          w/f1L41pAXhWmJK3XlZowkMYVIE6Xm4rty3Uwc78TrvtcTxyTYMueQxTKPdRkAk2
+          YerxyBApoFuT/UkuSL49WJKVYpSQasQgQzVjAiLZX1BXSwEaw3nhcy8Ln9rdr2+W
+          f4JRKVQPBs9ipsLvSUVlAUXdprvopwVze8oZb3jQgNmDJrJY1KrD1T7pu22nL2h+
+          XC36/tlKokr3SVpk5bqT8SQv/lTmdtEnvP9SYApffSpak2A4dnNk28/iva6TA2PB
+          de0lrvuHAgMBAAECggEBAJmm8Huk95d8B4w1IYf9VgineaSuF4DkgsbUO2ETjQW5
+          H36lFQhzMpkuxBqkneiG56p+LdmwA0JUvPl2cCOJ1qhArQF+76TSla5ZJwVxDpBe
+          MYDPFsJOicPxbW9uh0LlehW19ocVafGKD1H0zE86TxSQEYR2CXwbF5DxnlImkMh7
+          ZxZRUgRjc04s6yPbtSOJKBCQ5GBC18PwyRLXjp600TQsxYXfAEDyHZP79VDv0z2i
+          udVS45Hdc5NtQq2XnRtFDzK1WBt9gXV+9NMZ0l9awxsuGcmJp4FhKmOSIRQxNWNc
+          R6ZlrDabaHEV0JQ9AfqtrA8Q5Yluu7AnzyYu73ZU2ekCgYEA0cKBATVrchfCeQ2x
+          T4WHLL59f1C1qkbqV5nLEClV3HsMI5e6sv0tYbCd70A9ve6SmEHdsnb90WnKctQy
+          X7UCUH0gLU/r2nzOBK5aE8JLFGER3Iwf3zpyyRR5IrjsxhrR0F4s/y5Sn2fhdU7f
+          CRCoBQCKpficBucrFAM5ZZ9bBpMCgYEAxzbrdGmnX6KVlgFQH5hSW9PkKIYFiltA
+          nkCu0BZf6y9ZRfoNabu6xHPmNfUCj1CFymZ8bicn50L9AP/bIqLzFnmY3jlRs6l1
+          pLBdLJqfWcZ5LSyVH+BJY5qMMx6HcuHUjfqC3TpmcyLOQZrHrm3vD78L7FoqEOEi
+          LvXc7gRz+70CgYEAyOGYQDsTkilU8i99zmVXZi9r6oC16cOOa6R6hxi/BK7GmlOV
+          1hKG4paNOfJw7rNKqwvxMBeqzmGdI0k6kNO9yq16Ikr22cBKYMtEssWQt4ya2XdM
+          krDb+txjgjBNeQ94Pi/iseN/9u86SOjmyjysXFX/ciFb83RxmfHYhw0M1IcCgYEA
+          tRzrB1Uew8WOdWgQLglPpwiG/4iI9PZtUvK/e5M79ReA9CuXki8IZ55vB1MO1riA
+          SjjOm16h2pB+cDAsS9sVYbN/FVnLO6muuOFWdDzG7tmQRU+o6+f/ELzrBXaV8g36
+          LnI4E2UKy1YzalWLgLuVgh1Qe7qlT98+Mq94AjSuNYkCgYARYJ3T3X/K72/BnzSU
+          1u3Kfp0QD62GdjSnvbVYRORMDhgzxg3nzd7105bnlp6xFUz1hXU50UUma7gMdNj3
+          TOdaFI6V40e/L6D1iAjaUzuUv5oBUX2uag8YtisafZTgeFR8Qv4pdKKxcWuaN8Ta
+          OuiaAwnfOXPASK7ZQPT+kVRRvg==
+          -----END PRIVATE KEY-----
+        cert-text: |
+          -----BEGIN CERTIFICATE-----
+          MIIELjCCAxagAwIBAgIUH7UcXmpQJQmxi8fLvVmtKZxoDEcwDQYJKoZIhvcNAQEL
+          BQAwXjELMAkGA1UEBhMCQ04xEzARBgNVBAoTClRlbnBheS5jb20xHTAbBgNVBAsT
+          FFRlbnBheS5jb20gQ0EgQ2VudGVyMRswGQYDVQQDExJUZW5wYXkuY29tIFJvb3Qg
+          Q0EwHhcNMjUwNTE5MDkwNDQ0WhcNMzAwNTE4MDkwNDQ0WjCBhzETMBEGA1UEAwwK
+          MTcxNzA0NDQ0NzEbMBkGA1UECgwS5b6u5L+h5ZWG5oi357O757ufMTMwMQYDVQQL
+          DCrmtqbok53lnKPkuJbnp5HmioDvvIjkupHljZfvvInmnInpmZDlhazlj7gxCzAJ
+          BgNVBAYTAkNOMREwDwYDVQQHDAhTaGVuWmhlbjCCASIwDQYJKoZIhvcNAQEBBQAD
+          ggEPADCCAQoCggEBAKM7MjwV6EYYa9PAEYQ1lumgeY3XHAbwOb6jTOdd9D64KTsI
+          NgCfmBN+IsnrdhF5QnSF+IWLp3zveAPD9/UvjWkBeFaYkrdeVmjCQxhUgTpebiu3
+          LdTBzvxOu+1xPHJNgy55DFMo91GQCTZh6vHIECmgW5P9SS5Ivj1YkpVilJBqxCBD
+          NWMCItlfUFdLARrDeeFzLwuf2t2vb5Z/glEpVA8Gz2Kmwu9JRWUBRd2mu+inBXN7
+          yhlveNCA2YMmsljUqsPVPum7bacvaH5cLfr+2UqiSvdJWmTlupPxJC/+VOZ20Se8
+          /1JgCl99KlqTYDh2c2Tbz+K9rpMDY8F17SWu+4cCAwEAAaOBuTCBtjAJBgNVHRME
+          AjAAMAsGA1UdDwQEAwID+DCBmwYDVR0fBIGTMIGQMIGNoIGKoIGHhoGEaHR0cDov
+          L2V2Y2EuaXRydXMuY29tLmNuL3B1YmxpYy9pdHJ1c2NybD9DQT0xQkQ0MjIwRTUw
+          REJDMDRCMDZBRDM5NzU0OTg0NkMwMUMzRThFQkQyJnNnPUhBQ0M0NzFCNjU0MjJF
+          MTJCMjdBOUQzM0E4N0FEMUNERjU5MjZFMTQwMzcxMA0GCSqGSIb3DQEBCwUAA4IB
+          AQA40IETh/Tg6sBWEeSUTEVL/iP1VFD74SqBSc3EUGww9V5GN/+KqeVzzFTtg196
+          nYsbqB4WkcYnsmEhvWjFRcXTZ+YZtRrbQdsw+VLWsrSbc79Slwpumt4hA5LjNNpe
+          EO2ZXuXS2myv7TxJhV9BS8LXgB2jHIM40m2jabyOVYdrFZvJAU+wYeBP9lxOXcij
+          /PkWcxR6xKOV8o1V/WR4xzEO92fgnO9m4eodo9r0Am5/CmlBknoeSXExLK0YvBwK
+          wkScrMcJOr5VDRaG4WEtX/uXywfN6bv1bq5tEF1FMQI+zQn0UreyKGnAo8QqX7Zv
+          RByxMCsz8i/HUTQfmbkDEwOV
+          -----END CERTIFICATE-----
