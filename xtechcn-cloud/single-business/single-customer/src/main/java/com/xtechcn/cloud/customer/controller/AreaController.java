@@ -45,7 +45,9 @@ public class AreaController {
     private final AreaService areaService;
 
     private final ReceiveConfigService receiveConfigService;
-
+    @Autowired
+    @Lazy
+    private AreaController areaController;
 
     @GetMapping(value = "/page")
     @Operation(description = "分页查询", summary = "分页查询")
